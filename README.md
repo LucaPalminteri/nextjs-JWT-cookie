@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Dependencies
+
+- [axios](https://www.npmjs.com/package/axios)
+- [cookie](https://www.npmjs.com/package/cookie)
+- [jose](https://www.npmjs.com/package/jose)
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+- [next](https://www.npmjs.com/package/next)
+- [react](https://www.npmjs.com/package/react)
+- [react-dom](https://www.npmjs.com/package/react-dom)
+
 ## Getting Started
 
 First, run the development server:
