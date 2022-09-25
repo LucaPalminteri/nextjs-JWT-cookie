@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 function Dashboard() {
@@ -8,6 +8,9 @@ function Dashboard() {
     username: "",
   });
   const router = useRouter();
+  useEffect(()=>{
+    setUser(getProfile())
+  },[])
 
   const getProfile = async () => {
     const profile = await axios.get("/api/profile");
@@ -23,9 +26,9 @@ function Dashboard() {
     router.push("/login");
   };
   return (
-    <div>
-      {JSON.stringify(user)}
-      <button onClick={() => getProfile()}>profile</button>
+    <div className="dashboard">
+      <p>Username = {user.username}</p>
+      <p>Email = {user.email}</p>
       <button onClick={() => logout()}>Logout</button>
     </div>
   );

@@ -7,7 +7,12 @@ function Home() {
     email: "",
     password: "",
   });
+
+  const [isOk, setIsOk] = useState(true)
+
   const router = useRouter();
+
+  const errorValidation = {outline: '2px solid red', backgroundColor: '#FFCCCC' }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,31 +24,38 @@ function Home() {
     }
   };
 
+  const validateInput = () => {
+    
+  }
+
   return (
-    <div>
+    <div className="login">
       <form onSubmit={handleSubmit}>
         <input
           type="email"
-          placeholder="email"
+          placeholder="Email"
           onChange={(e) =>
             setCredentials({
               ...credentials,
               email: e.target.value,
             })
           }
+          style={isOk? {} : errorValidation}
         />
         <input
           type="password"
-          placeholder="password"
+          placeholder="Password"
           onChange={(e) =>
             setCredentials({
               ...credentials,
               password: e.target.value,
             })
           }
+          style={isOk? {} : errorValidation}
         />
-        <button>Save</button>
+        <button>Log in</button>
       </form>
+        <button onClick={() => setIsOk(prev => !prev)}>Cheeck isOk</button>
     </div>
   );
 }
