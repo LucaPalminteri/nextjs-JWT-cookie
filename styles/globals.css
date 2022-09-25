@@ -38,7 +38,17 @@ a {
 
 .login form button {
   padding: 14px 0;
+  transition-duration: .2s;
 }
 
+.login form button:hover {
+  color: #FAFAFA;
+  cursor: pointer;
+  background-color: #BBBBBB;
+}
 
+.login form button:active {
+  background-color: #B4B4B4;
+  transform: scale(.9);
+}
 

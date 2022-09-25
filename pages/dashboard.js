@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
+
 
 function Dashboard() {
   const [user, setUser] = useState({
@@ -30,6 +32,9 @@ function Dashboard() {
       <p>Username = {user.username}</p>
       <p>Email = {user.email}</p>
       <button onClick={() => logout()}>Logout</button>
+      <Link href='/'>
+        <button>Index</button>
+      </Link>
     </div>
   );
 }

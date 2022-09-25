@@ -12,7 +12,7 @@ export async function middleware(request) {
     if (request.nextUrl.pathname.includes("/login")) {
       try {
         await jwtVerify(jwt, new TextEncoder().encode("secret"));
-        return NextResponse.redirect(new URL("/dashboard", request.url));
+        return NextResponse.redirect(new URL("/", request.url));
       } catch (error) {
         return NextResponse.next();
       }

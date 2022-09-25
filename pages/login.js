@@ -1,23 +1,32 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { supabase } from '../utils/supabaseClient'
 
 function Home() {
-  const [credentials, setCredentials] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [isOk, setIsOk] = useState(true)
-
   const router = useRouter();
-
+  
+  const [credentials, setCredentials] = useState({email: "",password: ""});
+  const [isLogged, setIsLogged] = useState(false)
+  const [isOk, setIsOk] = useState(true)
+  const [users, setUsers] = useState([])
   const errorValidation = {outline: '2px solid red', backgroundColor: '#FFCCCC' }
+
+  useEffect(()=> {
+    fetchUsers()
+  })
+
+  const fetchUsers = async () => {
+    const { data } = await supabase.from('profiles').select();
+    setUsers(data)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if(validateInput == false) return
+
     const res = await axios.post("/api/auth/login", credentials);
-    console.log(res);
 
     if (res.status === 200) {
       router.push("/dashboard");
@@ -25,7 +34,17 @@ function Home() {
   };
 
   const validateInput = () => {
-    
+    console.log(credentials);
+    const output = users.some(user => {
+      if(user.email == credentials.email && user.password == credentials.password) {
+        console.log('ok');
+        return true;
+      }
+      else console.log('not ok');
+    })
+    if(output == true) setIsOk(true)
+    else if(output == false) setIsOk(false)
+    return output
   }
 
   return (
@@ -53,9 +72,9 @@ function Home() {
           }
           style={isOk? {} : errorValidation}
         />
-        <button>Log in</button>
+        <button onClick={(e) => handleSubmit(e)}>Log in</button>
       </form>
-        <button onClick={() => setIsOk(prev => !prev)}>Cheeck isOk</button>
+        <button onClick={validateInput}>Cheeck isOk</button>
     </div>
   );
 }
