@@ -1,16 +1,17 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { supabase } from '../utils/supabaseClient'
 
 function Home() {
   const router = useRouter();
   
-  const [credentials, setCredentials] = useState({email: "",password: ""});
-  const [isLogged, setIsLogged] = useState(false)
   const [isOk, setIsOk] = useState(true)
   const [users, setUsers] = useState([])
   const errorValidation = {outline: '2px solid red', backgroundColor: '#FFCCCC' }
+
+  const email = useRef();
+  const password = useRef();
 
   useEffect(()=> {
     fetchUsers()
@@ -26,7 +27,7 @@ function Home() {
 
     if(validateInput == false) return
 
-    const res = await axios.post("/api/auth/login", credentials);
+    const res = await axios.post("/api/auth/login", {email:email.current.value,password:password.current.value});
 
     if (res.status === 200) {
       router.push("/dashboard");
@@ -34,10 +35,8 @@ function Home() {
   };
 
   const validateInput = () => {
-    console.log(credentials);
     const output = users.some(user => {
-      if(user.email == credentials.email && user.password == credentials.password) {
-        console.log('ok');
+      if(user.email == email.current.value && user.password == password.current.value) {
         return true;
       }
       else console.log('not ok');
@@ -53,28 +52,17 @@ function Home() {
         <input
           type="email"
           placeholder="Email"
-          onChange={(e) =>
-            setCredentials({
-              ...credentials,
-              email: e.target.value,
-            })
-          }
+          ref={email}
           style={isOk? {} : errorValidation}
         />
         <input
           type="password"
           placeholder="Password"
-          onChange={(e) =>
-            setCredentials({
-              ...credentials,
-              password: e.target.value,
-            })
-          }
+          ref={password}
           style={isOk? {} : errorValidation}
         />
         <button onClick={(e) => handleSubmit(e)}>Log in</button>
       </form>
-        <button onClick={validateInput}>Cheeck isOk</button>
     </div>
   );
 }
