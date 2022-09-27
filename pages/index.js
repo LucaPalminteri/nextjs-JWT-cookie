@@ -17,7 +17,6 @@ function Indexpage() {
     <div>
       <h1>Index Page</h1>
 
-
       <Link href={setIsLogged ? '/dashboard' : '/login'}>
         <button>{setIsLogged ? 'Dashboard' : 'Login'}</button>
       </Link>

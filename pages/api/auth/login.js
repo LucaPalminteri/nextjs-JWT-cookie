@@ -1,22 +1,22 @@
 import { sign } from "jsonwebtoken";
 import { serialize } from "cookie";
 import { supabase } from '../../../utils/supabaseClient'
+import { encrypt, compare } from '../../../helpers/handleBcrypt';
 
 export default function loginHandler(req, res) {
   const { email, password } = req.body;
-  const isOk = false
 
   (async () => {
-    const { data } = await supabase.from('profiles').select();
+    const { data } = await supabase.from('users').select();
     console.log(data);
-    data.some(user => {
-      if(user.email == email && user.password == password) {
-        isOk = true
+    const output = data.some(user => {
+      if(user.email == email && compare(password, user.password)) {
         return true;
       }
-      else isOk =false
     })
   })()
+
+  
 
   if (email === "admin@gmail.com" && password === "admin") {
     // expire in 30 days

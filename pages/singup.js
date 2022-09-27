@@ -1,10 +1,9 @@
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { supabase } from '../utils/supabaseClient'
 import { encrypt, compare } from '../helpers/handleBcrypt';
 
 function Singup() {
 
-  const [isOk, setIsOk] = useState(true)
   const username = useRef()
   const email = useRef()
   const password = useRef()
@@ -18,17 +17,19 @@ function Singup() {
       async function createUser() {
         const hashPas = await encrypt(password.current.value)
         const {data} = await supabase
-          .from("profiles")
-          .insert(
-            [{
-                username: username.current.value,
-                email: email.current.value,
-                password: hashPas
-              },],
-            { upsert: false }
-          );
-          email.current.value = ""; username.current.value= ""; password.current.value = ""
-          console.log("user creates succesfully!");
+          .from('')
+          .select()
+          console.log(data);
+        //   .insert(
+        //     [{
+        //         username: username.current.value,
+        //         email: email.current.value,
+        //         password: hashPas
+        //       },],
+        //     { upsert: false }
+        //   );
+        //   email.current.value = ""; username.current.value= ""; password.current.value = ""
+        //   console.log("user creates succesfully!");
         } 
 
   return (
