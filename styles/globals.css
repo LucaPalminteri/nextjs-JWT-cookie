@@ -86,3 +86,20 @@ button:active {
   border-radius: 0 30px 30px 0;
   border: 2px solid #98AFAF;
 }
+
+@media screen and (max-width: 600px) {
+  body {
+    font-size: larger;
+  }
+
+  button, input {
+    font-size: 20px;
+  }
+  form {
+    width: 80vw;
+  }
+
+  h2 {
+    font-size: 30px;
+  }
+}
