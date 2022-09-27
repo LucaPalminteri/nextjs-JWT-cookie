@@ -9,6 +9,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - [next](https://www.npmjs.com/package/next)
 - [react](https://www.npmjs.com/package/react)
 - [react-dom](https://www.npmjs.com/package/react-dom)
+- [bcryptjs](https://www.npmjs.com/package/bcryptjs)
 
 ## Getting Started
 
