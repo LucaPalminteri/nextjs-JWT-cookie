@@ -1,12 +1,16 @@
 import { useRef } from 'react';
 import { supabase } from '../utils/supabaseClient'
 import { encrypt, compare } from '../helpers/handleBcrypt';
+import Link from 'next/link';
 
 function Singup() {
 
   const username = useRef()
   const email = useRef()
   const password = useRef()
+
+  const primaryBtn = {backgroundColor: '#24a0ed', color: '#FFF'}
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,8 +37,9 @@ function Singup() {
         } 
 
   return (
-    <div>
+    <div className='signup'>
       <form onSubmit={handleSubmit}>
+        <h2>Sign Up</h2>
         <input
           type="text"
           placeholder="Username"
@@ -50,7 +55,10 @@ function Singup() {
           placeholder="Password"
           ref={password}
         />
-        <button onClick={(e) => handleSubmit(e)}>Sing up</button>
+        <button type='submit' onClick={(e) => handleSubmit(e)} style={primaryBtn}>Sign up</button>
+        <Link href='login'>
+          <button>Login</button>
+        </Link>
       </form>
     </div>
   )

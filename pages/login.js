@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { supabase } from '../utils/supabaseClient'
+import Link from "next/link";
 
 function Home() {
   const router = useRouter();
@@ -12,6 +13,8 @@ function Home() {
 
   const email = useRef();
   const password = useRef();
+
+  const primaryBtn = {backgroundColor: '#24a0ed', color: '#FFF'}
 
   useEffect(()=> {
     fetchUsers()
@@ -30,7 +33,7 @@ function Home() {
     const res = await axios.post("/api/auth/login", {email:email.current.value,password:password.current.value});
 
     if (res.status === 200) {
-      router.push("/dashboard");
+      router.push("/");
     }
   };
 
@@ -49,6 +52,7 @@ function Home() {
   return (
     <div className="login">
       <form onSubmit={handleSubmit}>
+        <h2>Log In</h2>
         <input
           type="email"
           placeholder="Email"
@@ -61,7 +65,10 @@ function Home() {
           ref={password}
           style={isOk? {} : errorValidation}
         />
-        <button onClick={(e) => handleSubmit(e)}>Log in</button>
+        <button type="submit" onClick={(e) => handleSubmit(e)} style={primaryBtn}>Log in</button>
+        <Link href='singup'>
+          <button>Sign Up</button>
+        </Link>
       </form>
     </div>
   );

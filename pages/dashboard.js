@@ -29,11 +29,15 @@ function Dashboard() {
   };
   return (
     <div className="dashboard">
-      <p>Username = {user.username}</p>
-      <p>Email = {user.email}</p>
+      <div className="data-container">
+        <span>Username</span><span>{user.username}</span>
+      </div>
+      <div className="data-container">
+        <span>Email</span><span>{user.email}</span>
+      </div>
       <button onClick={() => logout()}>Logout</button>
       <Link href='/'>
-        <button>Index</button>
+        <button>Home</button>
       </Link>
     </div>
   );
