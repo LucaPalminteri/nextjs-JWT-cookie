@@ -26,7 +26,7 @@ form {
   align-items: center;
 }
 
-input, button {
+input, button, div {
   margin: 10px 0;
   padding: 10px;
   width: 100%;
@@ -85,6 +85,24 @@ button:active {
   background-color: #DEDEDE;
   border-radius: 0 30px 30px 0;
   border: 2px solid #98AFAF;
+}
+
+.password-container {
+  position: relative;
+  display: flex; 
+  justify-content: space-around; 
+  align-items: center; 
+  margin: 0; 
+  padding: 0;
+}
+
+.showpass-icon {
+  position: absolute;
+  right: 10px;
+}
+
+.showpass-icon:hover {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 600px) {

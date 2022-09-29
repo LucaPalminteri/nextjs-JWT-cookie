@@ -52,22 +52,25 @@ function Singup() {
           placeholder="Email"
           ref={email}
         />
-        <input
-          type={showPassword ? "text" : "password"}
-          placeholder="Password"
-          ref={password}
-        />
+        <div className='password-container'>
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            ref={password}
+          />
+          {
+          showPassword ?
+          <VisibilityIcon className='showpass-icon' onClick={() => setShowPassword(prev => !prev)}>View password</VisibilityIcon>
+          :
+          <VisibilityOutlinedIcon className='showpass-icon' onClick={() => setShowPassword(prev => !prev)}>View password</VisibilityOutlinedIcon>
+          }
+        </div>
         <button type='submit' onClick={(e) => handleSubmit(e)} style={primaryBtn}>Sign up</button>
         <Link href='login'>
           <button>Login</button>
         </Link>
       </form>
-      {
-        showPassword ?
-        <VisibilityIcon onClick={() => setShowPassword(prev => !prev)}>View password</VisibilityIcon>
-        :
-        <VisibilityOutlinedIcon onClick={() => setShowPassword(prev => !prev)}>View password</VisibilityOutlinedIcon>
-      }
+      
     </div>
   )
 }
