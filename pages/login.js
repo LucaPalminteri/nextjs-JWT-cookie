@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { supabase } from '../utils/supabaseClient'
 import Link from "next/link";
+import { compare } from "../helpers/handleBcrypt"
 
 function Home() {
   const router = useRouter();
@@ -27,10 +28,11 @@ function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(validateInput());
 
-    if(validateInput == false) return
+    if(isOk == false) return
 
-    const res = await axios.post("/api/auth/login", {email:email.current.value,password:password.current.value});
+    const res = await axios.post("/api/auth/login", {email:email.current.value, isValidationOk: false});
 
     if (res.status === 200) {
       router.push("/");
@@ -38,15 +40,12 @@ function Home() {
   };
 
   const validateInput = () => {
-    const output = users.some(user => {
-      if(user.email == email.current.value && user.password == password.current.value) {
+    users.some(user => {
+      if(user.email == email.current.value && compare(password.current.value,user.password)) {
         return true;
       }
-      else console.log('not ok');
     })
-    if(output == true) setIsOk(true)
-    else if(output == false) setIsOk(false)
-    return output
+    
   }
 
   return (
@@ -70,6 +69,7 @@ function Home() {
           <button>Sign Up</button>
         </Link>
       </form>
+      <button onClick={() => validateInput()}></button>
     </div>
   );
 }
