@@ -2,6 +2,8 @@ import { useRef, useState } from 'react';
 import { supabase } from '../utils/supabaseClient'
 import { encrypt, compare } from '../helpers/handleBcrypt';
 import Link from 'next/link';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 function Singup() {
 
@@ -60,7 +62,12 @@ function Singup() {
           <button>Login</button>
         </Link>
       </form>
-      <button onClick={() => setShowPassword(prev => !prev)}>View password</button>
+      {
+        showPassword ?
+        <VisibilityIcon onClick={() => setShowPassword(prev => !prev)}>View password</VisibilityIcon>
+        :
+        <VisibilityOutlinedIcon onClick={() => setShowPassword(prev => !prev)}>View password</VisibilityOutlinedIcon>
+      }
     </div>
   )
 }
