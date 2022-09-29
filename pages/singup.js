@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { supabase } from '../utils/supabaseClient'
 import { encrypt, compare } from '../helpers/handleBcrypt';
 import Link from 'next/link';
@@ -8,6 +8,8 @@ function Singup() {
   const username = useRef()
   const email = useRef()
   const password = useRef()
+
+  const [showPassword, setShowPassword] = useState(false)
 
   const primaryBtn = {backgroundColor: '#24a0ed', color: '#FFF'}
 
@@ -20,20 +22,18 @@ function Singup() {
 
       async function createUser() {
         const hashPas = await encrypt(password.current.value)
-        const {data} = await supabase
-          .from('')
-          .select()
-          console.log(data);
-        //   .insert(
-        //     [{
-        //         username: username.current.value,
-        //         email: email.current.value,
-        //         password: hashPas
-        //       },],
-        //     { upsert: false }
-        //   );
-        //   email.current.value = ""; username.current.value= ""; password.current.value = ""
-        //   console.log("user creates succesfully!");
+        console.log("signup");
+        const {data, error} = await supabase
+          .from('profiles')
+          .insert(
+            [{
+                username: username.current.value,
+                email: email.current.value,
+                password: hashPas
+              },],
+            { upsert: false }
+          );
+          email.current.value = ""; username.current.value= ""; password.current.value = "";
         } 
 
   return (
@@ -51,7 +51,7 @@ function Singup() {
           ref={email}
         />
         <input
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="Password"
           ref={password}
         />
@@ -60,6 +60,7 @@ function Singup() {
           <button>Login</button>
         </Link>
       </form>
+      <button onClick={() => setShowPassword(prev => !prev)}>View password</button>
     </div>
   )
 }
