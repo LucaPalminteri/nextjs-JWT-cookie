@@ -1,20 +1,31 @@
 import { sign } from "jsonwebtoken";
 import { serialize } from "cookie";
 import { supabase } from '../../../utils/supabaseClient'
-import { encrypt, compare } from '../../../helpers/handleBcrypt';
+import { compare } from '../../../helpers/handleBcrypt';
 
 export default function loginHandler(req, res) {
   const { email, password } = req.body;
+  let output = false
 
-  (async () => {
-    const { data } = await supabase.from('users').select();
-    console.log(data);
-    const output = data.some(user => {
+  console.log(`req body:\nemail=${email}\npassword=${password}`);
+
+  const getUsers = async () => {
+    const { data, error } = await supabase.from('profiles').select();
+    output = data.some(user => {
+
+      // TODO: make encrypted comparassion work, rn it returns a promise (should be boolean)
+
+      let samePass = compare(password, user.password)
+      console.log(`${email} == ${user.email} ?? ${user.email == email}`);
+      console.log(`${password} == ${user.password} ?? ${samePass}`);
       if(user.email == email && compare(password, user.password)) {
         return true;
       }
     })
-  })()
+  }
+  getUsers()
+
+  console.log(output);
 
   
 

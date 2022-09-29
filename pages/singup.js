@@ -1,20 +1,21 @@
 import { useRef, useState } from 'react';
 import { supabase } from '../utils/supabaseClient'
-import { encrypt, compare } from '../helpers/handleBcrypt';
+import { encrypt } from '../helpers/handleBcrypt';
 import Link from 'next/link';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useRouter } from 'next/router';
 
 function Singup() {
 
   const username = useRef()
   const email = useRef()
   const password = useRef()
+  const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false)
 
   const primaryBtn = {backgroundColor: '#24a0ed', color: '#FFF'}
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -36,6 +37,7 @@ function Singup() {
             { upsert: false }
           );
           email.current.value = ""; username.current.value= ""; password.current.value = "";
+          router.push('/login')
         } 
 
   return (
